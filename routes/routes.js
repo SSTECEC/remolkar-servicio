@@ -108,6 +108,7 @@ router.get('/listarTalleres', controller.workshop.listarTalleres);
 
 router.post('/gestionFactura', controller.invoice.gestionFactura);
 router.post('/gestionFacturaDetalle', controller.invoice.gestionFacturaDetalle);
+router.post('/enviarEmail', controller.email.enviarEmail);
 
 
 module.exports = router;
