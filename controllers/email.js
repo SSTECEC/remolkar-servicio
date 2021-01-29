@@ -25,10 +25,8 @@ module.exports = {
             }   
           }));
 
-            /* 'ventas@remolkar.com;ventas1@remolkar.com;repuestos@remolkar.com;gruas1@remolkar.com, gruas2@remolkar.com' */
-
           let opciones = {
-            to: 'remolkar.ec@gmail.com', 
+            to: 'ventas@remolkar.com;ventas1@remolkar.com;repuestos@remolkar.com;gruas1@remolkar.com, gruas2@remolkar.com', 
             subject: asunto,
             html: message,
           };
