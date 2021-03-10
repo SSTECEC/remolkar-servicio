@@ -28,7 +28,7 @@ var storageTicket = new FTPStorage({
     host: '107.180.40.62',
     secure: false,
     user: 'admin@remolkar.com',
-    password: 'H=a$l=(1Zl)&',
+    password: '#I7BI4cG5~hg',
     port: 21
   },
   destination: function (req, file, options, callback) {
