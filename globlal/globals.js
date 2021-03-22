@@ -1,3 +1,3 @@
 module.exports = {
-  entorno: "DESARROLLO"
+  entorno: "PRODUCCION"
 }

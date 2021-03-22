@@ -24,32 +24,53 @@ module.exports = {
       } else {
         var credentials = rows[0];
 
+        var valores = { total: 0, subtotal0: 0, subtotal12: 0, iva: 0 };
+        if (globals.entorno == 'PRODUCCION') {
+          valores.subtotal12 = req.body.subtotal;
+          valores.subtotal0 = "0.00";
+          valores.iva = req.body.iva;
+          valores.total = req.body.total;
+        } else {
+          valores.subtotal12 = "0.89";
+          valores.subtotal0 = "0.00";
+          valores.iva = "0.11";
+          valores.total = "1.00";
+        }
+
+
         var mode = (globals.entorno == 'PRODUCCION' ? '' : '&testMode=EXTERNAL');
         var body =
           "entityId=" + credentials.entityId + "" +
-          "&amount=3.12" +
+          "&amount=" + valores.total + "" +
           "&currency=USD" +
           "&paymentType=DB" +
-          "&customer.givenName=MARIO" +
-          "&customer.middleName=FERNANDO" +
-          "&customer.surname=PALOMO" +
+          "&customer.givenName=" + req.body.primerNombre + "" +
+          "&customer.middleName=" + req.body.segundoNombre + "" +
+          "&customer.surname=" + req.body.apellido + "" +
           "&customer.ip=" + methods.generarIp() + "" +
-          "&customer.merchantCustomerId=897982" +
-          "&merchantTransactionId=897982" +
-          "&customer.email=mariofpalomoa@gmail.com" +
+          "&customer.merchantCustomerId=" + req.body.idCliente + "" +
+          "&merchantTransactionId=" + req.body.idTransaccion + "" +
+          "&customer.email=" + req.body.email + "" +
           "&customer.identificationDocType=IDCARD" +
-          "&customer.identificationDocId=1724395536" +
-          "&customer.phone=0979212157" +
+          "&customer.identificationDocId=" + req.body.identificacion + "" +
+          "&customer.phone=" + req.body.telefono + "" +
+          "&shipping.street1=" + req.body.direccion + "" +
+          "&billing.street1=" + req.body.direccion + "" +
+          "&shipping.country=EC" +
+          "&billing.country=EC" +
           mode +
-          "&customParameters[SHOPPER_VAL_BASE0]=2.00" +
-          "&customParameters[SHOPPER_VAL_BASEIMP]=1.00" +
-          "&customParameters[SHOPPER_VAL_IVA]=0.12" +
+          "&customParameters[SHOPPER_VAL_BASE0]=" + valores.subtotal0 + "" +
+          "&customParameters[SHOPPER_VAL_BASEIMP]=" + valores.subtotal12 + "" +
+          "&customParameters[SHOPPER_VAL_IVA]=" + valores.iva + "" +
           "&customParameters[SHOPPER_MID]=" + credentials.mid + "" +
           "&customParameters[SHOPPER_TID]=" + credentials.tid + "" +
+          "&customParameters[SHOPPER_ECI]=" + credentials.eci + "" +
+          "&customParameters[SHOPPER_PSERV]=" + credentials.pserv + "" +
+          "&customParameters[SHOPPER_VERSIONDF]=" + credentials.versiondf + "" +
           "&risk.parameters[USER_DATA2]=" + credentials.userData + "" +
-          "&cart.items['0'].name=LLANTA CST 2.50-17 C7226 4PR 38L" +
-          "&cart.items['0'].description=LLANTA CST 2.50-17 C7226 4PR 38L" +
-          "&cart.items['0'].price=3.12" +
+          "&cart.items['0'].name=" + req.body.nombreProducto + "" +
+          "&cart.items['0'].description=" + req.body.nombreProducto + "" +
+          "&cart.items['0'].price=" + valores.total + "" +
           "&cart.items['0'].quantity=1";
 
         var options = {
